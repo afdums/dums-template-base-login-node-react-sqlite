@@ -73,7 +73,7 @@ const login = async (payload) => {
   const password = normalizePassword(payload?.password);
 
   if (!email || !password) {
-    throw new HttpError(400, "Missing required fields.");
+    throw new HttpError(400, "Campos obrigatórios ausentes.");
   }
 
   const user = await findUserByEmail(email, {
@@ -84,12 +84,12 @@ const login = async (payload) => {
   });
 
   if (!user) {
-    throw new HttpError(401, "Invalid credentials.");
+    throw new HttpError(401, "Credenciais Inválidas.");
   }
 
   const matches = await bcrypt.compare(password, user.passwordHash);
   if (!matches) {
-    throw new HttpError(401, "Invalid credentials.");
+    throw new HttpError(401, "Credenciais Inválidas.");
   }
 
   const tokens = await issueTokens(user.id);
