@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { register } from "./authService";
 import { isEmail } from "../../shared/lib/validators";
 import "./LoginPage.css";
@@ -17,6 +17,7 @@ export default function RegisterPage({ onSwitch = () => {} }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const redirectTimeoutRef = useRef(null);
 
   const isValid = useMemo(() => {
     return (
@@ -36,6 +37,10 @@ export default function RegisterPage({ onSwitch = () => {} }) {
     event.preventDefault();
     setError("");
     setSuccess("");
+    if (redirectTimeoutRef.current) {
+      clearTimeout(redirectTimeoutRef.current);
+      redirectTimeoutRef.current = null;
+    }
 
     if (!isValid) {
       if (values.password !== values.confirmPassword) {
@@ -51,14 +56,25 @@ export default function RegisterPage({ onSwitch = () => {} }) {
     try {
       const data = await register(values);
       const userName = data?.user?.name || "Usuario";
-      setSuccess(`Cadastro concluido. Bem-vindo, ${userName}.`);
+      setSuccess(`Usuario criado. Bem-vindo, ${userName}. Redirecionando...`);
       setValues(initialValues);
+      redirectTimeoutRef.current = setTimeout(() => {
+        onSwitch();
+      }, 1500);
     } catch (err) {
       setError(err.message || "Nao foi possivel cadastrar.");
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (redirectTimeoutRef.current) {
+        clearTimeout(redirectTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section className="auth-shell">
