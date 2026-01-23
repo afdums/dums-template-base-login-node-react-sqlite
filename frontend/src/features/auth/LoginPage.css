@@ -1,4 +1,4 @@
-.login-shell {
+.auth-shell {
   position: relative;
   z-index: 1;
   display: grid;
@@ -10,82 +10,82 @@
   overflow: hidden;
 }
 
-.login-hero {
+.auth-hero {
   padding: 48px 48px 56px;
-  background: linear-gradient(135deg, #d9f2ee 0%, #fff4e8 60%, #fbe9dc 100%);
+  background: var(--hero-gradient);
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.login-hero h1 {
+.auth-hero h1 {
   font-size: clamp(2rem, 2.6vw, 2.8rem);
   margin: 0;
-  color: #0f172a;
+  color: var(--hero-title);
 }
 
-.login-hero p {
+.auth-hero p {
   margin: 0;
   color: var(--muted);
   font-size: 1.05rem;
   line-height: 1.5;
 }
 
-.login-chip {
+.auth-chip {
   align-self: flex-start;
   padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(15, 118, 110, 0.15);
+  background: var(--chip-bg);
   color: var(--accent-strong);
   font-weight: 600;
   font-size: 0.85rem;
   letter-spacing: 0.02em;
 }
 
-.login-metrics {
+.auth-metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
   margin-top: auto;
 }
 
-.login-metrics div {
-  background: rgba(255, 255, 255, 0.7);
+.auth-metrics div {
+  background: var(--metrics-bg);
   border-radius: 16px;
   padding: 16px;
-  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--metrics-shadow);
 }
 
-.login-metrics strong {
+.auth-metrics strong {
   display: block;
   font-size: 1rem;
 }
 
-.login-metrics span {
+.auth-metrics span {
   color: var(--muted);
   font-size: 0.9rem;
 }
 
-.login-card {
+.auth-card {
   padding: 48px 48px 56px;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  background: #ffffff;
+  background: var(--card-elevated);
   animation: rise 0.6s ease-out;
 }
 
-.login-card h2 {
+.auth-card h2 {
   margin: 6px 0 8px;
   font-size: 2rem;
 }
 
-.login-card p {
+.auth-card p {
   margin: 0;
   color: var(--muted);
 }
 
-.login-eyebrow {
+.auth-eyebrow {
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.2em;
@@ -93,53 +93,59 @@
   font-weight: 600;
 }
 
-.login-field {
+.auth-field {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.login-field label {
+.auth-field label {
   font-weight: 600;
   font-size: 0.9rem;
 }
 
-.login-field input {
+.auth-field input {
   padding: 12px 14px;
   border-radius: 12px;
   border: 1px solid var(--border);
+  background: var(--input-bg);
+  color: var(--text);
   font-size: 1rem;
   transition: border 0.2s ease, box-shadow 0.2s ease;
 }
 
-.login-field input:focus {
+.auth-field input::placeholder {
+  color: var(--muted);
+}
+
+.auth-field input:focus {
   outline: none;
   border-color: rgba(15, 118, 110, 0.5);
   box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
 }
 
-.login-button {
+.auth-button {
   padding: 12px 16px;
   border-radius: 14px;
-  background: linear-gradient(120deg, #0f766e, #0b525c);
+  background: var(--button-gradient);
   color: white;
   font-size: 1rem;
   font-weight: 600;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.login-button:disabled {
+.auth-button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-.login-button:not(:disabled):hover {
+.auth-button:not(:disabled):hover {
   transform: translateY(-1px);
   box-shadow: 0 16px 30px rgba(15, 23, 42, 0.2);
 }
 
-.login-alert {
+.auth-alert {
   padding: 12px 14px;
   border-radius: 12px;
   background: rgba(194, 65, 12, 0.12);
@@ -147,7 +153,7 @@
   font-weight: 500;
 }
 
-.login-success {
+.auth-success {
   padding: 12px 14px;
   border-radius: 12px;
   background: var(--accent-soft);
@@ -155,14 +161,36 @@
   font-weight: 600;
 }
 
-.login-hint {
+.auth-hint {
   font-size: 0.85rem;
   color: var(--muted);
 }
 
-.login-hint span {
+.auth-hint span {
   color: var(--accent);
   font-weight: 600;
+}
+
+.auth-switch {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.auth-switch button {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-weight: 600;
+  padding: 0;
+}
+
+.auth-switch button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 999px;
 }
 
 @keyframes rise {
@@ -177,25 +205,25 @@
 }
 
 @media (max-width: 960px) {
-  .login-shell {
+  .auth-shell {
     grid-template-columns: 1fr;
   }
 
-  .login-hero {
+  .auth-hero {
     padding: 40px;
   }
 
-  .login-card {
+  .auth-card {
     padding: 40px;
   }
 }
 
 @media (max-width: 640px) {
-  .login-shell {
+  .auth-shell {
     border-radius: 20px;
   }
 
-  .login-metrics {
+  .auth-metrics {
     grid-template-columns: 1fr;
   }
 }

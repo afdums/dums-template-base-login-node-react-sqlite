@@ -1,16 +1,18 @@
 import { useMemo, useState } from "react";
-import { login } from "./authService";
+import { register } from "./authService";
 import { isEmail } from "../../shared/lib/validators";
 import "./LoginPage.css";
 
 const MIN_PASSWORD_LENGTH = 6;
 
 const initialValues = {
+  name: "",
   email: "",
   password: "",
+  confirmPassword: "",
 };
 
-export default function LoginPage({ onSwitch = () => {} }) {
+export default function RegisterPage({ onSwitch = () => {} }) {
   const [values, setValues] = useState(initialValues);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -18,9 +20,12 @@ export default function LoginPage({ onSwitch = () => {} }) {
 
   const isValid = useMemo(() => {
     return (
-      isEmail(values.email) && values.password.length >= MIN_PASSWORD_LENGTH
+      values.name.trim().length >= 2 &&
+      isEmail(values.email) &&
+      values.password.length >= MIN_PASSWORD_LENGTH &&
+      values.password === values.confirmPassword
     );
-  }, [values.email, values.password]);
+  }, [values]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -33,18 +38,23 @@ export default function LoginPage({ onSwitch = () => {} }) {
     setSuccess("");
 
     if (!isValid) {
-      setError("Informe um email e senha validos.");
+      if (values.password !== values.confirmPassword) {
+        setError("As senhas nao conferem.");
+      } else {
+        setError("Preencha nome, email valido e senha com minimo 6 caracteres.");
+      }
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const data = await login(values);
+      const data = await register(values);
       const userName = data?.user?.name || "Usuario";
-      setSuccess(`Bem-vindo de volta, ${userName}.`);
+      setSuccess(`Cadastro concluido. Bem-vindo, ${userName}.`);
+      setValues(initialValues);
     } catch (err) {
-      setError(err.message || "Nao foi possivel entrar.");
+      setError(err.message || "Nao foi possivel cadastrar.");
     } finally {
       setIsLoading(false);
     }
@@ -53,19 +63,19 @@ export default function LoginPage({ onSwitch = () => {} }) {
   return (
     <section className="auth-shell">
       <div className="auth-hero">
-        <span className="auth-chip">Acesso seguro</span>
-        <h1>Acesse seu workspace</h1>
+        <span className="auth-chip">Novo acesso</span>
+        <h1>Crie sua conta</h1>
         <p>
-          Use suas credenciais para acessar o painel e validar o fluxo do
-          backend em segundos.
+          Cadastre seus dados para liberar o acesso e testar o fluxo do backend
+          com tokens JWT.
         </p>
         <div className="auth-metrics">
           <div>
-            <strong>JWT pronto</strong>
-            <span>Tokens de acesso + refresh</span>
+            <strong>Cadastro rapido</strong>
+            <span>Nome, email e senha</span>
           </div>
           <div>
-            <strong>Saude da API</strong>
+            <strong>Pronto para testar</strong>
             <span>Health check protegido</span>
           </div>
         </div>
@@ -74,8 +84,22 @@ export default function LoginPage({ onSwitch = () => {} }) {
       <form className="auth-card" onSubmit={handleSubmit}>
         <div>
           <span className="auth-eyebrow">Bem-vindo</span>
-          <h2>Entrar</h2>
-          <p>Informe seu email e senha para continuar.</p>
+          <h2>Criar conta</h2>
+          <p>Informe seus dados para continuar.</p>
+        </div>
+
+        <div className="auth-field">
+          <label htmlFor="name">Nome</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            autoComplete="name"
+            placeholder="Seu nome completo"
+            value={values.name}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div className="auth-field">
@@ -98,9 +122,24 @@ export default function LoginPage({ onSwitch = () => {} }) {
             id="password"
             name="password"
             type="password"
-            autoComplete="current-password"
+            autoComplete="new-password"
             placeholder="Minimo 6 caracteres"
             value={values.password}
+            onChange={handleChange}
+            minLength={MIN_PASSWORD_LENGTH}
+            required
+          />
+        </div>
+
+        <div className="auth-field">
+          <label htmlFor="confirmPassword">Confirmar senha</label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            autoComplete="new-password"
+            placeholder="Repita a senha"
+            value={values.confirmPassword}
             onChange={handleChange}
             minLength={MIN_PASSWORD_LENGTH}
             required
@@ -120,17 +159,17 @@ export default function LoginPage({ onSwitch = () => {} }) {
         ) : null}
 
         <button className="auth-button" type="submit" disabled={isLoading}>
-          {isLoading ? "Entrando..." : "Entrar"}
+          {isLoading ? "Criando conta..." : "Criar conta"}
         </button>
 
         <p className="auth-hint">
-          Use o access token para chamar <span>/health</span>.
+          Depois do cadastro, use o login para testar <span>/health</span>.
         </p>
 
         <p className="auth-switch">
-          Ainda nao tem conta?
+          Ja tem conta?
           <button type="button" onClick={onSwitch}>
-            Criar conta
+            Entrar
           </button>
         </p>
       </form>
