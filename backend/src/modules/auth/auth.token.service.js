@@ -31,6 +31,16 @@ const signRefreshToken = (userId, tokenId) => {
   );
 };
 
+const verifyAccessToken = (token) => {
+  const { accessSecret } = getAuthConfig();
+
+  try {
+    return jwt.verify(token, accessSecret);
+  } catch (error) {
+    throw new HttpError(401, "Invalid access token.");
+  }
+};
+
 const getTokenExpiry = (token) => {
   const decoded = jwt.decode(token);
   if (!decoded?.exp) {
@@ -52,6 +62,7 @@ const verifyRefreshToken = (token) => {
 module.exports = {
   signAccessToken,
   signRefreshToken,
+  verifyAccessToken,
   getTokenExpiry,
   verifyRefreshToken,
 };

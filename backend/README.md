@@ -1,6 +1,6 @@
 # Backend
 
-API Node.js com Express, Prisma e SQLite. Estrutura modular por feature (auth, health) e autenticação com JWT (access/refresh token).
+API Node.js com Express, Prisma e SQLite. Estrutura modular por feature (auth, health) e autenticacao com JWT (access/refresh token).
 
 ## Stack
 
@@ -56,4 +56,5 @@ npm run dev
 
 - O login/cadastro retorna `{ user, tokens }`.
 - O refresh deve receber `{ refreshToken }`.
+- A rota `GET /health` exige `Authorization: Bearer <access_token>` e serve para testar o login.
 - Para trocar de banco no futuro, atualize o provider/URL do Prisma.
