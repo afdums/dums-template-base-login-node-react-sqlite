@@ -6,6 +6,12 @@ const findUserByEmail = (email, select) =>
     select,
   });
 
+const findUserById = (id, select) =>
+  prisma.user.findUnique({
+    where: { id },
+    select,
+  });
+
 const createUser = (data, select) =>
   prisma.user.create({
     data,
@@ -30,6 +36,7 @@ const revokeRefreshToken = (tokenId) =>
 
 module.exports = {
   findUserByEmail,
+  findUserById,
   createUser,
   createRefreshToken,
   findRefreshTokenByTokenId,

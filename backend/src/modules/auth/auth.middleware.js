@@ -1,4 +1,5 @@
 const { HttpError } = require("../../shared/http-error");
+const { findUserById } = require("./auth.repository");
 const { verifyAccessToken } = require("./auth.token.service");
 
 const getBearerToken = (req) => {
@@ -40,4 +41,35 @@ const authGuard = (req, res, next) => {
   }
 };
 
-module.exports = { authGuard };
+const adminGuard = async (req, res, next) => {
+  if (!req.auth?.userId) {
+    return res.status(401).json({ error: "Missing authentication." });
+  }
+
+  try {
+    const user = await findUserById(req.auth.userId, {
+      id: true,
+      role: true,
+      isActive: true,
+    });
+
+    if (!user) {
+      throw new HttpError(401, "Invalid access token.");
+    }
+
+    if (!user.isActive) {
+      throw new HttpError(403, "User is inactive.");
+    }
+
+    if (user.role !== "ADMIN") {
+      throw new HttpError(403, "Admin privileges required.");
+    }
+
+    req.auth.role = user.role;
+    return next();
+  } catch (error) {
+    return sendError(res, error);
+  }
+};
+
+module.exports = { authGuard, adminGuard };
