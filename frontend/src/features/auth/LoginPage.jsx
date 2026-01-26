@@ -10,7 +10,7 @@ const initialValues = {
   password: "",
 };
 
-export default function LoginPage({ onSwitch = () => {} }) {
+export default function LoginPage({ onSwitch = () => {}, onLogin = () => {} }) {
   const [values, setValues] = useState(initialValues);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -43,6 +43,7 @@ export default function LoginPage({ onSwitch = () => {} }) {
       const data = await login(values);
       const userName = data?.user?.name || "Usuario";
       setSuccess(`Bem-vindo de volta, ${userName}.`);
+      onLogin(data);
     } catch (err) {
       setError(err.message || "Nao foi possivel entrar.");
     } finally {

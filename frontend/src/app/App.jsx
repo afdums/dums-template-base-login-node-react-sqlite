@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import LoginPage from "../features/auth/LoginPage.jsx";
 import RegisterPage from "../features/auth/RegisterPage.jsx";
+import DashboardPage from "../features/dashboard/DashboardPage.jsx";
 import "./App.css";
 
 const THEME_KEY = "theme";
@@ -22,14 +23,27 @@ const getInitialTheme = () => {
 export default function App() {
   const [theme, setTheme] = useState(getInitialTheme);
   const [view, setView] = useState("login");
+  const [session, setSession] = useState(null);
+
+  const userName = useMemo(() => session?.user?.name || "Usuario", [session]);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     window.localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
 
+  const handleLogin = (data) => {
+    setSession(data);
+    setView("dashboard");
+  };
+
+  const handleLogout = () => {
+    setSession(null);
+    setView("login");
+  };
+
   return (
-    <div className="app">
+    <div className={`app ${view === "dashboard" ? "app--dashboard" : ""}`}>
       <div className="theme-toggle" role="group" aria-label="Tema">
         <button
           type="button"
@@ -48,8 +62,14 @@ export default function App() {
           Claro
         </button>
       </div>
-      {view === "login" ? (
-        <LoginPage onSwitch={() => setView("register")} />
+      {view === "dashboard" ? (
+        <DashboardPage
+          userName={userName}
+          accessToken={session?.tokens?.accessToken || ""}
+          onLogout={handleLogout}
+        />
+      ) : view === "login" ? (
+        <LoginPage onSwitch={() => setView("register")} onLogin={handleLogin} />
       ) : (
         <RegisterPage onSwitch={() => setView("login")} />
       )}

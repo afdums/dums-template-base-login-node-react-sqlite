@@ -7,6 +7,17 @@
   overflow: hidden;
 }
 
+.app--dashboard {
+  display: block;
+  padding: 0;
+  overflow: visible;
+}
+
+.app--dashboard::before,
+.app--dashboard::after {
+  display: none;
+}
+
 .app::before {
   content: "";
   position: absolute;
