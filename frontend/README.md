@@ -1,69 +1,42 @@
-# Frontend
+# Frontend (Angular + PO UI)
 
-App React com Vite, tela de login e cadastro, tema dark por default com opcao de alternar para light.
+Frontend refeito em Angular standalone com Router e componentes PO UI.
 
 ## Stack
 
-- React 18
-- Vite
-- CSS modular por feature
+- Angular 19 (standalone)
+- PO UI (@po-ui/ng-components)
+- RxJS
 
-## Como rodar localmente
-
-1) Instale as dependencias
+## Como rodar
 
 ```bash
 cd frontend
 npm install
+npm start
 ```
 
-2) Configure o ambiente
+Abra `http://localhost:4200/`.
 
-Crie um `.env` a partir do exemplo:
+## Configuracao da API
 
-```bash
-copy .env.example .env
+Edite o `src/index.html` e ajuste:
+
+```html
+<script>
+  window.__APP_CONFIG__ = { apiUrl: "http://localhost:3000" };
+</script>
 ```
 
-Variavel usada:
+## Rotas principais
 
-```
-VITE_API_URL="http://localhost:3000"
-```
+- `/login`
+- `/register`
+- `/dashboard/health`
+- `/dashboard/admin`
 
-3) Inicie o servidor de desenvolvimento
+## O que esta pronto
 
-```bash
-npm run dev
-```
-
-## O que existe no frontend
-
-- Tema global com dark/light e toggle salvo no `localStorage`.
-- Tela de login (consome `POST /auth/login`).
-- Tela de cadastro (consome `POST /auth/register`).
-- Validacao simples de email e senha no client.
-
-## Estrutura de pastas
-
-```
-src/
-  app/
-    App.jsx
-    App.css
-    theme.css
-  features/
-    auth/
-      LoginPage.jsx
-      RegisterPage.jsx
-      LoginPage.css
-      authService.js
-  shared/
-    lib/
-      validators.js
-```
-
-## Notas
-
-- Os tokens sao retornados pela API e exibidos apenas como feedback de sucesso.
-- Para testar o backend, use o access token no header `Authorization: Bearer <token>` e chame `GET /health`.
+- Autenticacao (login/cadastro)
+- Dashboard com cards de status
+- Admin de usuarios (lista + ativar/desativar)

@@ -1,0 +1,53 @@
+<po-page-default
+  p-title="Dashboard"
+  p-subtitle="Verifique o status da API e acompanhe sinais vitais."
+>
+  <div class="dashboard-hero">
+    <div>
+      <span class="dashboard-kicker">Bem-vindo de volta</span>
+      <h2>Visao geral da operacao</h2>
+      <p>
+        Acompanhe saude, logs e metricas para manter o backend sempre pronto.
+      </p>
+    </div>
+    <po-tag p-value="Status API" [p-type]="statusTagType"></po-tag>
+  </div>
+
+  <div class="dashboard-grid">
+    <po-widget
+      p-title="Health Check"
+      p-primary-label="Ver status"
+      p-tag="Ativo"
+      p-tag-type="success"
+      (p-primary-action)="showComingSoon('Health Check')"
+    >
+      <p class="widget-copy">
+        Valide a disponibilidade, latencia e response time do ambiente.
+      </p>
+    </po-widget>
+
+    <po-widget
+      p-title="Logs inteligentes"
+      p-primary-label="Abrir logs"
+      p-tag="Monitoramento"
+      p-tag-type="info"
+      (p-primary-action)="showComingSoon('Logs')"
+    >
+      <p class="widget-copy">
+        Colete eventos criticos e entenda falhas antes dos usuarios.
+      </p>
+    </po-widget>
+
+    <po-widget
+      p-title="Metricas"
+      p-primary-label="Detalhes"
+      p-tag="Indicadores"
+      p-tag-type="warning"
+      (p-primary-action)="showComingSoon('Metricas')"
+    >
+      <p class="widget-copy">
+        Siga KPIs de performance, throughput e estabilidade em tempo real.
+      </p>
+    </po-widget>
+  </div>
+</po-page-default>

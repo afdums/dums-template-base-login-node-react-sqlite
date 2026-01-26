@@ -1,0 +1,29 @@
+<po-page-default
+  p-title="Usuarios"
+  p-subtitle="Gerencie acessos e status com controle total."
+  [p-actions]="pageActions"
+>
+  <div class="admin-summary">
+    <po-info
+      p-label="Total de usuarios"
+      [p-value]="totalUsersLabel"
+    ></po-info>
+    <po-info
+      p-label="Ativos"
+      [p-value]="activeUsersLabel"
+    ></po-info>
+    <po-info
+      p-label="Inativos"
+      [p-value]="inactiveUsersLabel"
+    ></po-info>
+  </div>
+
+  <p class="admin-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <po-table
+    [p-columns]="columns"
+    [p-items]="users"
+    [p-actions]="actions"
+    [p-loading]="isLoading"
+  ></po-table>
+</po-page-default>

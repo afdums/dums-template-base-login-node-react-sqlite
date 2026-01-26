@@ -1,0 +1,22 @@
+<div class="shell">
+  <po-toolbar
+    p-title="Workspace"
+    [p-profile]="profile"
+    [p-profile-actions]="profileActions"
+  ></po-toolbar>
+
+  <div class="shell-body">
+    <po-menu [p-menus]="menus">
+      <ng-template p-menu-header-template>
+        <div class="menu-brand">
+          <span>Painel</span>
+          <strong>Workspace</strong>
+        </div>
+      </ng-template>
+    </po-menu>
+
+    <main class="shell-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

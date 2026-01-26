@@ -1,0 +1,76 @@
+<po-page-default
+  p-title="Crie sua conta"
+  p-subtitle="Cadastre seus dados para testar o fluxo de autenticação."
+>
+  <div class="auth-layout">
+    <section class="auth-hero">
+      <span class="auth-chip">Novo acesso</span>
+      <h2>Ative sua conta em minutos</h2>
+      <p>
+        Receba os tokens de acesso e valide o health check protegido com
+        facilidade.
+      </p>
+      <div class="auth-metrics">
+        <div>
+          <strong>Cadastro rapido</strong>
+          <span>Nome, email e senha</span>
+        </div>
+        <div>
+          <strong>Login imediato</strong>
+          <span>Volte ao painel em segundos</span>
+        </div>
+      </div>
+    </section>
+
+    <po-container class="auth-card">
+      <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
+        <div>
+          <span class="auth-eyebrow">Bem-vindo</span>
+          <h3>Criar conta</h3>
+          <p>Informe seus dados para continuar.</p>
+        </div>
+
+        <po-input
+          p-label="Nome"
+          p-placeholder="Seu nome completo"
+          formControlName="name"
+        ></po-input>
+
+        <po-input
+          p-label="Email"
+          p-placeholder="seu@email.com"
+          formControlName="email"
+        ></po-input>
+
+        <po-password
+          p-label="Senha"
+          p-placeholder="Minimo 6 caracteres"
+          formControlName="password"
+        ></po-password>
+
+        <po-password
+          p-label="Confirmar senha"
+          p-placeholder="Repita a senha"
+          formControlName="confirmPassword"
+        ></po-password>
+
+        <p class="auth-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+        <po-button
+          p-label="Criar conta"
+          p-kind="primary"
+          [p-type]="submitType"
+          [p-loading]="isLoading"
+          [p-disabled]="isLoading || form.invalid"
+        ></po-button>
+
+        <div class="auth-footer">
+          <span>Ja tem conta?</span>
+          <button type="button" class="auth-link" (click)="goToLogin()">
+            Entrar
+          </button>
+        </div>
+      </form>
+    </po-container>
+  </div>
+</po-page-default>

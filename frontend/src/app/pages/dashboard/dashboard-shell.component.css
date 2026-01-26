@@ -1,0 +1,49 @@
+.shell {
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.shell-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 0;
+  min-height: calc(100vh - 64px);
+}
+
+po-menu {
+  border-right: 1px solid #e2e8f0;
+  min-height: 100%;
+}
+
+.shell-content {
+  padding: 1.5rem 2rem 2.5rem;
+}
+
+.menu-brand {
+  display: grid;
+  gap: 0.1rem;
+  padding: 1.25rem 1rem 0.5rem 1rem;
+  color: #1e293b;
+}
+
+.menu-brand span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #94a3b8;
+}
+
+.menu-brand strong {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 960px) {
+  .shell-body {
+    grid-template-columns: 1fr;
+  }
+
+  po-menu {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+}

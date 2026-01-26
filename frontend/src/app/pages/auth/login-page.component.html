@@ -1,0 +1,64 @@
+<po-page-default
+  p-title="Acesse seu workspace"
+  p-subtitle="Entre com sua conta para acompanhar o status da API."
+>
+  <div class="auth-layout">
+    <section class="auth-hero">
+      <span class="auth-chip">Acesso seguro</span>
+      <h2>Controle total em um painel unificado</h2>
+      <p>
+        Visualize tokens, health checks e usuários a partir de um fluxo Angular
+        completo com PO UI.
+      </p>
+      <div class="auth-metrics">
+        <div>
+          <strong>JWT pronto</strong>
+          <span>Tokens de acesso + refresh</span>
+        </div>
+        <div>
+          <strong>API protegida</strong>
+          <span>Endpoints com guards</span>
+        </div>
+      </div>
+    </section>
+
+    <po-container class="auth-card">
+      <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()">
+        <div>
+          <span class="auth-eyebrow">Bem-vindo</span>
+          <h3>Entrar</h3>
+          <p>Informe seu email e senha para continuar.</p>
+        </div>
+
+        <po-input
+          p-label="Email"
+          p-placeholder="seu@email.com"
+          formControlName="email"
+        ></po-input>
+
+        <po-password
+          p-label="Senha"
+          p-placeholder="Minimo 6 caracteres"
+          formControlName="password"
+        ></po-password>
+
+        <p class="auth-error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+        <po-button
+          p-label="Entrar"
+          p-kind="primary"
+          [p-type]="submitType"
+          [p-loading]="isLoading"
+          [p-disabled]="isLoading || form.invalid"
+        ></po-button>
+
+        <div class="auth-footer">
+          <span>Ainda nao tem conta?</span>
+          <button type="button" class="auth-link" (click)="goToRegister()">
+            Criar conta
+          </button>
+        </div>
+      </form>
+    </po-container>
+  </div>
+</po-page-default>
