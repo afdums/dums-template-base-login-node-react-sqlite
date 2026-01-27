@@ -1,11 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, DestroyRef, NgZone, inject } from "@angular/core";
 import { Router, RouterOutlet } from "@angular/router";
 import {
   PoMenuItem,
   PoToolbarAction,
   PoToolbarProfile,
 } from "@po-ui/ng-components";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { AuthService } from "../../core/auth.service";
 import { PO_UI_MODULES } from "../../shared/po-ui-imports";
 
@@ -17,32 +18,42 @@ import { PO_UI_MODULES } from "../../shared/po-ui-imports";
   styleUrls: ["./dashboard-shell.component.css"],
 })
 export class DashboardShellComponent {
+  private destroyRef = inject(DestroyRef);
   readonly menus: PoMenuItem[] = [
     { label: "Health", link: "/dashboard/health", icon: "po-icon-ok" },
     { label: "Admin", link: "/dashboard/admin", icon: "po-icon-user" },
   ];
+  readonly profileActions: PoToolbarAction[] = [];
+  profile: PoToolbarProfile = {
+    title: "Usuario",
+    subtitle: "",
+  };
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private zone: NgZone
+  ) {
+    this.profileActions.push({
+      label: "Sair",
+      action: this.logout.bind(this),
+      type: "danger",
+    });
 
-  get profile(): PoToolbarProfile {
-    return {
-      title: this.auth.userName,
-      subtitle: this.auth.userEmail,
-    };
-  }
-
-  get profileActions(): PoToolbarAction[] {
-    return [
-      {
-        label: "Sair",
-        action: () => this.logout(),
-        type: "danger",
-      },
-    ];
+    this.auth.session$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.profile = {
+          title: this.auth.userName,
+          subtitle: this.auth.userEmail,
+        };
+      });
   }
 
   logout(): void {
     this.auth.logout();
-    void this.router.navigate(["/login"]);
+    this.zone.run(() => {
+      void this.router.navigateByUrl("/login", { replaceUrl: true });
+    });
   }
 }

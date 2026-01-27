@@ -6,14 +6,23 @@
   ></po-toolbar>
 
   <div class="shell-body">
-    <po-menu [p-menus]="menus">
-      <ng-template p-menu-header-template>
-        <div class="menu-brand">
-          <span>Painel</span>
-          <strong>Workspace</strong>
-        </div>
-      </ng-template>
-    </po-menu>
+    <aside class="shell-sidebar">
+      <po-menu [p-menus]="menus">
+        <ng-template p-menu-header-template>
+          <div class="menu-brand">
+            <span>Painel</span>
+            <strong>Workspace</strong>
+          </div>
+        </ng-template>
+      </po-menu>
+      <div class="sidebar-footer">
+        <po-button
+          p-label="Sair"
+          [p-danger]="true"
+          (p-click)="logout()"
+        ></po-button>
+      </div>
+    </aside>
 
     <main class="shell-content">
       <router-outlet></router-outlet>

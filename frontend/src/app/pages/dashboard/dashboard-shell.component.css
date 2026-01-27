@@ -10,9 +10,21 @@
   min-height: calc(100vh - 64px);
 }
 
-po-menu {
-  border-right: 1px solid #e2e8f0;
+.shell-sidebar {
+  display: flex;
+  flex-direction: column;
   min-height: 100%;
+  border-right: 1px solid #e2e8f0;
+}
+
+po-menu {
+  flex: 1;
+}
+
+.sidebar-footer {
+  padding: 1rem;
+  border-top: 1px solid #e2e8f0;
+  background: #fff;
 }
 
 .shell-content {
@@ -42,7 +54,7 @@ po-menu {
     grid-template-columns: 1fr;
   }
 
-  po-menu {
+  .shell-sidebar {
     border-right: none;
     border-bottom: 1px solid #e2e8f0;
   }

@@ -47,7 +47,8 @@ export class AuthService {
   }
 
   logout(): void {
-    this.setSession(null);
+    this.sessionSubject.next(null);
+    this.clearStoredSession();
   }
 
   private setSession(session: Session | null): void {
@@ -55,8 +56,17 @@ export class AuthService {
     if (session) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
     } else {
-      localStorage.removeItem(STORAGE_KEY);
+      this.clearStoredSession();
     }
+  }
+
+  private clearStoredSession(): void {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {}
+    try {
+      sessionStorage.removeItem(STORAGE_KEY);
+    } catch {}
   }
 
   private loadSession(): Session | null {

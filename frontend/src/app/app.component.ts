@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { PoNotificationService } from "@po-ui/ng-components";
 import { RouterOutlet } from "@angular/router";
 
 @Component({
@@ -7,4 +8,8 @@ import { RouterOutlet } from "@angular/router";
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor(private notification: PoNotificationService) {
+    this.notification.setDefaultDuration(5000);
+  }
+}
