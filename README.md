@@ -2,30 +2,52 @@
 
 ## Sugestoes para evoluir o template (checklist)
 
-- [ ] Rotacao de refresh token + revogacao de sessoes
-- [ ] Logout de todos os dispositivos
-- [ ] Politica de senha (tamanho minimo/complexidade) + bloqueio por tentativas
-- [ ] Fluxo "esqueci minha senha"
-- [ ] Verificacao de e-mail
-- [ ] RBAC por role com middleware central (admin-only, etc.)
-- [ ] Paginacao/filtros/ordenacao no endpoint de usuarios
-- [ ] Respostas de erro padronizadas (codigo, mensagem, detalhes)
-- [ ] Validacao de payload centralizada (schema)
-- [ ] Health check completo (app + DB + storage se houver)
-- [ ] Logs com request-id para rastrear erros
-- [ ] Seed inicial (criar admin no primeiro boot)
-- [ ] Script "init" (criar .env, migrar DB, seed)
-- [ ] Docker Compose (backend + DB) e/ou opcao pronta para Postgres
-- [ ] Documentacao "clone -> roda" curta e objetiva
-- [ ] Interceptor de refresh token + logout automatico em 401
-- [ ] Guard por role no frontend (menu/admin por permissao)
-- [ ] Formularios com validacao completa + feedback consistente
-- [ ] Estado global de erro/loading (toasts/skeletons)
-- [ ] Opcao "lembrar sessao"
-- [ ] Busca/filtro/ordenacao/paginacao na tela de usuarios
-- [ ] Detalhes do usuario (modal) + edicao de role
-- [ ] Acoes em lote (ativar/desativar)
-- [ ] Reset de senha por admin (com confirmacao)
-- [ ] Script de "renomear projeto" (nome/app title/package.json)
-- [ ] Variaveis de tema padronizadas (cores/tipografia)
-- [ ] i18n basico (pt/en)
+Legenda de prioridade: P1 = obrigatorio, P2 = recomendado, P3 = opcional.
+
+### Backend - Autenticacao e seguranca
+
+- [ ] (P1) Rotacao de refresh token + revogacao de sessoes
+- [ ] (P1) Politica de senha (tamanho minimo/complexidade) + bloqueio por tentativas
+- [ ] (P1) Fluxo "esqueci minha senha"
+- [ ] (P1) Verificacao de e-mail
+- [ ] (P2) Logout de todos os dispositivos
+- [ ] (P2) RBAC por role com middleware central (admin-only, etc.)
+
+### Backend - API e dados
+
+- [ ] (P1) Validacao de payload centralizada (schema)
+- [ ] (P1) Respostas de erro padronizadas (codigo, mensagem, detalhes)
+- [ ] (P2) Paginacao/filtros/ordenacao no endpoint de usuarios
+
+### Backend - Observabilidade
+
+- [ ] (P1) Health check completo (app + DB + storage se houver)
+- [ ] (P2) Logs com request-id para rastrear erros
+
+### Backend - DX e deploy
+
+- [ ] (P1) Seed inicial (criar admin no primeiro boot)
+- [ ] (P1) Script "init" (criar .env, migrar DB, seed)
+- [ ] (P2) Docker Compose (backend + DB) e/ou opcao pronta para Postgres
+- [ ] (P2) Documentacao "clone -> roda" curta e objetiva
+
+### Frontend - Autenticacao e UX
+
+- [ ] (P1) Interceptor de refresh token + logout automatico em 401
+- [ ] (P1) Formularios com validacao completa + feedback consistente
+- [ ] (P1) Estado global de erro/loading (toasts/skeletons)
+- [ ] (P2) Guard por role no frontend (menu/admin por permissao)
+- [ ] (P2) Opcao "lembrar sessao"
+
+### Frontend - Admin de usuarios
+
+- [ ] (P1) Busca/filtro/ordenacao/paginacao na tela de usuarios
+- [ ] (P2) Detalhes do usuario (modal) + edicao de role
+- [ ] (P2) Acoes em lote (ativar/desativar)
+- [ ] (P3) Reset de senha por admin (com confirmacao)
+
+### Template - Reuso e branding
+
+- [ ] (P1) Script de "renomear projeto" (nome/app title/package.json)
+- [ ] (P2) Variaveis de tema padronizadas (cores/tipografia)
+- [ ] (P3) i18n basico (pt/en)
