@@ -7,6 +7,7 @@ const {
   createRefreshToken,
   findRefreshTokenByTokenId,
   findUserByEmail,
+  findUserById,
   revokeRefreshToken,
   revokeRefreshTokensByUserId,
 } = require("./auth.repository");
@@ -82,10 +83,15 @@ const login = async (payload) => {
     name: true,
     email: true,
     passwordHash: true,
+    isActive: true,
   });
 
   if (!user) {
     throw new HttpError(401, "Credenciais Inválidas.");
+  }
+
+  if (!user.isActive) {
+    throw new HttpError(403, "Usuario inativo.");
   }
 
   const matches = await bcrypt.compare(password, user.passwordHash);
@@ -128,6 +134,16 @@ const refresh = async (payload) => {
 
   if (storedToken.userId !== userId) {
     throw new HttpError(401, "Invalid refresh token.");
+  }
+
+  const user = await findUserById(userId, { id: true, isActive: true });
+  if (!user) {
+    throw new HttpError(401, "Invalid refresh token.");
+  }
+
+  if (!user.isActive) {
+    await revokeRefreshTokensByUserId(userId);
+    throw new HttpError(403, "Usuario inativo.");
   }
 
   if (storedToken.expiresAt <= new Date()) {
@@ -177,3 +193,4 @@ const logoutAll = async (userId) => {
 };
 
 module.exports = { register, login, refresh, logout, logoutAll };
+

@@ -20,7 +20,7 @@ const sendError = (res, error) => {
   return res.status(500).json({ error: "Unexpected error." });
 };
 
-const authGuard = (req, res, next) => {
+const authGuard = async (req, res, next) => {
   const token = getBearerToken(req);
   if (!token) {
     return res.status(401).json({ error: "Missing token." });
@@ -31,6 +31,15 @@ const authGuard = (req, res, next) => {
     if (decoded && typeof decoded !== "string") {
       const userId = Number(decoded.sub);
       if (Number.isInteger(userId)) {
+        const user = await findUserById(userId, { id: true, isActive: true });
+        if (!user) {
+          throw new HttpError(401, "Invalid access token.");
+        }
+
+        if (!user.isActive) {
+          throw new HttpError(403, "User is inactive.");
+        }
+
         req.auth = { userId, tokenType: "access" };
         return next();
       }
@@ -73,3 +82,4 @@ const adminGuard = async (req, res, next) => {
 };
 
 module.exports = { authGuard, adminGuard };
+
