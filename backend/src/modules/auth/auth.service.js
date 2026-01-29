@@ -8,6 +8,7 @@ const {
   findRefreshTokenByTokenId,
   findUserByEmail,
   revokeRefreshToken,
+  revokeRefreshTokensByUserId,
 } = require("./auth.repository");
 const {
   signAccessToken,
@@ -116,8 +117,13 @@ const refresh = async (payload) => {
   }
 
   const storedToken = await findRefreshTokenByTokenId(tokenId);
-  if (!storedToken || storedToken.revokedAt) {
+  if (!storedToken) {
     throw new HttpError(401, "Invalid refresh token.");
+  }
+
+  if (storedToken.revokedAt) {
+    await revokeRefreshTokensByUserId(userId);
+    throw new HttpError(401, "Refresh token revoked.");
   }
 
   if (storedToken.userId !== userId) {
@@ -133,4 +139,41 @@ const refresh = async (payload) => {
   return issueTokens(userId);
 };
 
-module.exports = { register, login, refresh };
+const logout = async (payload) => {
+  const refreshToken = normalizeToken(payload?.refreshToken);
+  if (!refreshToken) {
+    throw new HttpError(400, "Missing refresh token.");
+  }
+
+  const decoded = verifyRefreshToken(refreshToken);
+  if (!decoded || typeof decoded === "string") {
+    throw new HttpError(401, "Invalid refresh token.");
+  }
+
+  const tokenId = decoded.tid;
+  const userId = Number(decoded.sub);
+
+  if (!tokenId || !Number.isInteger(userId)) {
+    throw new HttpError(401, "Invalid refresh token.");
+  }
+
+  const storedToken = await findRefreshTokenByTokenId(tokenId);
+  if (!storedToken || storedToken.userId !== userId) {
+    throw new HttpError(401, "Invalid refresh token.");
+  }
+
+  await revokeRefreshToken(tokenId);
+
+  return { revoked: true };
+};
+
+const logoutAll = async (userId) => {
+  if (!Number.isInteger(userId)) {
+    throw new HttpError(401, "Invalid user.");
+  }
+
+  await revokeRefreshTokensByUserId(userId);
+  return { revoked: true };
+};
+
+module.exports = { register, login, refresh, logout, logoutAll };

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable, tap } from "rxjs";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { BehaviorSubject, Observable, catchError, of, tap } from "rxjs";
 import { API_URL } from "./api.config";
 import { LoginPayload, RegisterPayload, Session } from "./models";
 
@@ -46,9 +46,43 @@ export class AuthService {
     return this.http.post<Session>(`${API_URL}/auth/register`, payload);
   }
 
-  logout(): void {
-    this.sessionSubject.next(null);
-    this.clearStoredSession();
+  logout(): Observable<void> {
+    const refreshToken = this.session?.tokens?.refreshToken;
+    if (!refreshToken) {
+      this.clearSession();
+      return of(void 0);
+    }
+
+    return this.http
+      .post<void>(`${API_URL}/auth/logout`, { refreshToken })
+      .pipe(
+        tap(() => this.clearSession()),
+        catchError(() => {
+          this.clearSession();
+          return of(void 0);
+        })
+      );
+  }
+
+  logoutAll(): Observable<void> {
+    const token = this.accessToken;
+    if (!token) {
+      return this.logout();
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http
+      .post<void>(`${API_URL}/auth/logout-all`, {}, { headers })
+      .pipe(
+        tap(() => this.clearSession()),
+        catchError(() => {
+          this.clearSession();
+          return of(void 0);
+        })
+      );
   }
 
   private setSession(session: Session | null): void {
@@ -58,6 +92,11 @@ export class AuthService {
     } else {
       this.clearStoredSession();
     }
+  }
+
+  private clearSession(): void {
+    this.sessionSubject.next(null);
+    this.clearStoredSession();
   }
 
   private clearStoredSession(): void {

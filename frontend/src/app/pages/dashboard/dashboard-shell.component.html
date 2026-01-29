@@ -17,6 +17,11 @@
       </po-menu>
       <div class="sidebar-footer">
         <po-button
+          p-label="Sair de todos"
+          [p-danger]="true"
+          (p-click)="logoutAll()"
+        ></po-button>
+        <po-button
           p-label="Sair"
           [p-danger]="true"
           (p-click)="logout()"

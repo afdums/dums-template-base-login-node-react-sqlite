@@ -1,4 +1,4 @@
-const { register, login, refresh } = require("./auth.service");
+const { register, login, refresh, logout, logoutAll } = require("./auth.service");
 
 const handleError = (res, error) => {
   if (error?.status) {
@@ -36,4 +36,28 @@ const refreshController = async (req, res) => {
   }
 };
 
-module.exports = { registerController, loginController, refreshController };
+const logoutController = async (req, res) => {
+  try {
+    const result = await logout(req.body);
+    return res.json(result);
+  } catch (error) {
+    return handleError(res, error);
+  }
+};
+
+const logoutAllController = async (req, res) => {
+  try {
+    const result = await logoutAll(req.auth?.userId);
+    return res.json(result);
+  } catch (error) {
+    return handleError(res, error);
+  }
+};
+
+module.exports = {
+  registerController,
+  loginController,
+  refreshController,
+  logoutController,
+  logoutAllController,
+};

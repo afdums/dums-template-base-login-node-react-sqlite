@@ -34,6 +34,12 @@ const revokeRefreshToken = (tokenId) =>
     data: { revokedAt: new Date() },
   });
 
+const revokeRefreshTokensByUserId = (userId) =>
+  prisma.refreshToken.updateMany({
+    where: { userId, revokedAt: null },
+    data: { revokedAt: new Date() },
+  });
+
 module.exports = {
   findUserByEmail,
   findUserById,
@@ -41,4 +47,5 @@ module.exports = {
   createRefreshToken,
   findRefreshTokenByTokenId,
   revokeRefreshToken,
+  revokeRefreshTokensByUserId,
 };

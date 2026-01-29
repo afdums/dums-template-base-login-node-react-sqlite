@@ -64,11 +64,15 @@ npm run dev
 - `POST /auth/register`
 - `POST /auth/login`
 - `POST /auth/refresh`
+- `POST /auth/logout`
+- `POST /auth/logout-all`
 
 ## Notas
 
 - O login/cadastro retorna `{ user, tokens }`.
 - O refresh deve receber `{ refreshToken }`.
+- O logout recebe `{ refreshToken }` para revogar a sessao atual.
+- O logout-all revoga todas as sessoes do usuario autenticado (enviar access token).
 - A rota `GET /health` exige `Authorization: Bearer <access_token>` e serve para testar o login.
 - Para trocar de banco no futuro, atualize o provider/URL do Prisma.
 

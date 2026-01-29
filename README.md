@@ -6,7 +6,7 @@ Legenda de prioridade: P1 = obrigatorio, P2 = recomendado, P3 = opcional.
 
 ### Backend - Autenticacao e seguranca
 
-- [ ] (P1) Rotacao de refresh token + revogacao de sessoes
+- [x] (P1) Rotacao de refresh token + revogacao de sessoes
 - [ ] (P1) Politica de senha (tamanho minimo/complexidade) + bloqueio por tentativas
 - [ ] (P1) Fluxo "esqueci minha senha"
 - [ ] (P1) Verificacao de e-mail

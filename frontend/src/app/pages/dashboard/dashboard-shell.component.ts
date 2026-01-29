@@ -35,6 +35,12 @@ export class DashboardShellComponent {
     private zone: NgZone
   ) {
     this.profileActions.push({
+      label: "Sair de todos dispositivos",
+      action: this.logoutAll.bind(this),
+      type: "danger",
+    });
+
+    this.profileActions.push({
       label: "Sair",
       action: this.logout.bind(this),
       type: "danger",
@@ -51,7 +57,14 @@ export class DashboardShellComponent {
   }
 
   logout(): void {
-    this.auth.logout();
+    this.auth.logout().subscribe(() => this.navigateToLogin());
+  }
+
+  logoutAll(): void {
+    this.auth.logoutAll().subscribe(() => this.navigateToLogin());
+  }
+
+  private navigateToLogin(): void {
     this.zone.run(() => {
       void this.router.navigateByUrl("/login", { replaceUrl: true });
     });
