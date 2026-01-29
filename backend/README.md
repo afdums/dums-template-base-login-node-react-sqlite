@@ -1,12 +1,12 @@
 # Backend
 
-API Node.js com Express, Prisma e SQLite. Estrutura modular por feature (auth, health) e autenticacao com JWT (access/refresh token).
+API Node.js com Express, Prisma e PostgreSQL. Estrutura modular por feature (auth, health) e autenticacao com JWT (access/refresh token).
 
 ## Stack
 
 - Node.js + Express
 - Prisma ORM
-- SQLite (dev)
+- PostgreSQL
 - JWT (access/refresh)
 
 ## Como rodar localmente
@@ -24,6 +24,19 @@ Crie um arquivo `.env` a partir do exemplo:
 
 ```bash
 copy .env.example .env
+```
+
+Suba o Postgres localmente e ajuste o `DATABASE_URL` no `.env` (usuario, senha, host, porta e nome do banco).
+Formato:
+
+```
+DATABASE_URL="postgresql://USUARIO:SENHA@HOST:PORTA/NOME_DO_BANCO?schema=public"
+```
+
+Exemplo:
+
+```
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/app?schema=public"
 ```
 
 Preencha os secrets:
