@@ -46,6 +46,14 @@ JWT_ACCESS_SECRET="sua-chave"
 JWT_REFRESH_SECRET="sua-chave"
 ```
 
+Defina o admin inicial (primeiro boot):
+
+```
+SEED_ADMIN_NAME="Admin"
+SEED_ADMIN_EMAIL="admin@local"
+SEED_ADMIN_PASSWORD="change-me"
+```
+
 3) Rode as migrations e gere o client
 
 ```bash

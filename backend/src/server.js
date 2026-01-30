@@ -2,11 +2,13 @@ require("./config/env");
 
 const { app } = require("./app");
 const { connect, disconnect } = require("./database");
+const { seedAdminUser } = require("./database/seed");
 const port = process.env.PORT || 3000;
 
 const start = async () => {
   try {
     await connect();
+    await seedAdminUser();
 
     const server = app.listen(port, () => {
       console.log(`API listening on port ${port}`);

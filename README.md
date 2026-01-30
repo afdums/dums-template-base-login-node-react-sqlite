@@ -28,7 +28,7 @@ Legenda de prioridade: P1 = obrigatorio, P2 = recomendado, P3 = opcional.
 
 ### Backend - DX e deploy
 
-- [ ] (P1) Seed inicial (criar admin no primeiro boot)
+- [x] (P1) Seed inicial (criar admin no primeiro boot)
 - [ ] (P1) Script "init" (criar .env, migrar DB, seed)
 - [ ] (P2) Docker Compose (backend + DB) e/ou opcao pronta para Postgres
 - [ ] (P2) Documentacao "clone -> roda" curta e objetiva
