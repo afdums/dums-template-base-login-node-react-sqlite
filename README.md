@@ -29,7 +29,7 @@ Legenda de prioridade: P1 = obrigatorio, P2 = recomendado, P3 = opcional.
 ### Backend - DX e deploy
 
 - [x] (P1) Seed inicial (criar admin no primeiro boot)
-- [ ] (P1) Script "init" (criar .env, migrar DB, seed)
+- [x] (P1) Script "init" (criar .env, migrar DB, seed)
 - [ ] (P2) Docker Compose (backend + DB) e/ou opcao pronta para Postgres
 - [ ] (P2) Documentacao "clone -> roda" curta e objetiva
 
@@ -53,6 +53,14 @@ Legenda de prioridade: P1 = obrigatorio, P2 = recomendado, P3 = opcional.
 - [x] (P1) Script de "renomear projeto" (nome/app title/package.json)
 - [ ] (P2) Variaveis de tema padronizadas (cores/tipografia)
 - [ ] (P3) i18n basico (pt/en)
+
+## Script init (backend)
+
+Executa `npm run init` dentro de `backend` para:
+- criar o `.env` a partir do `.env.example` (se nao existir);
+- aplicar as migrations do Prisma;
+- gerar o client do Prisma;
+- executar o seed do admin inicial.
 
 ## Renomear projeto
 

@@ -18,7 +18,15 @@ cd backend
 npm install
 ```
 
-2) Configure as variaveis de ambiente
+2) (Opcional) Rode o script de init
+
+Ele cria o `.env` (se nao existir), aplica as migrations, gera o client do Prisma e executa o seed do admin.
+
+```bash
+npm run init
+```
+
+3) Configure as variaveis de ambiente
 
 Crie um arquivo `.env` a partir do exemplo:
 
@@ -54,13 +62,13 @@ SEED_ADMIN_EMAIL="admin@local"
 SEED_ADMIN_PASSWORD="change-me"
 ```
 
-3) Rode as migrations e gere o client
+4) Rode as migrations e gere o client
 
 ```bash
 npm run prisma:migrate
 ```
 
-4) Inicie o servidor
+5) Inicie o servidor
 
 ```bash
 npm run dev
