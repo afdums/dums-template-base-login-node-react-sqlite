@@ -1,4 +1,5 @@
 const { HttpError } = require("../../shared/http-error");
+const { isUuid } = require("../../shared/validators");
 const { findUserById } = require("../auth/auth.repository");
 const { toAdminUser } = require("./users.model");
 const { listUsers, updateUserActive } = require("./users.repository");
@@ -18,7 +19,7 @@ const listAllUsers = async () => {
 };
 
 const setUserActive = async (userId, isActive) => {
-  if (!Number.isInteger(userId)) {
+  if (!isUuid(userId)) {
     throw new HttpError(400, "Invalid user id.");
   }
 

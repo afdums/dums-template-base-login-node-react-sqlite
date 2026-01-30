@@ -18,6 +18,7 @@ Legenda de prioridade: P1 = obrigatorio, P2 = recomendado, P3 = opcional.
 
 - [ ] (P1) Validacao de payload centralizada (schema)
 - [ ] (P1) Respostas de erro padronizadas (codigo, mensagem, detalhes)
+- [x] (P2) Usar UUID como IDs (User/RefreshToken)
 - [ ] (P2) Paginacao/filtros/ordenacao no endpoint de usuarios
 
 ### Backend - Observabilidade

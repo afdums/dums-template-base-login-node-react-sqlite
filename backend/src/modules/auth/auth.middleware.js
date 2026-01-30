@@ -1,4 +1,5 @@
 const { HttpError } = require("../../shared/http-error");
+const { isUuid } = require("../../shared/validators");
 const { findUserById } = require("./auth.repository");
 const { verifyAccessToken } = require("./auth.token.service");
 
@@ -29,8 +30,8 @@ const authGuard = async (req, res, next) => {
   try {
     const decoded = verifyAccessToken(token);
     if (decoded && typeof decoded !== "string") {
-      const userId = Number(decoded.sub);
-      if (Number.isInteger(userId)) {
+      const userId = decoded.sub;
+      if (isUuid(userId)) {
         const user = await findUserById(userId, { id: true, isActive: true });
         if (!user) {
           throw new HttpError(401, "Invalid access token.");

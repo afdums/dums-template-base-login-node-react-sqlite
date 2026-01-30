@@ -23,6 +23,7 @@ const {
   normalizePassword,
   normalizeToken,
 } = require("./auth.validation");
+const { isUuid } = require("../../shared/validators");
 
 const createTokenId = () =>
   typeof crypto.randomUUID === "function"
@@ -116,9 +117,9 @@ const refresh = async (payload) => {
   }
 
   const tokenId = decoded.tid;
-  const userId = Number(decoded.sub);
+  const userId = decoded.sub;
 
-  if (!tokenId || !Number.isInteger(userId)) {
+  if (!tokenId || !isUuid(userId)) {
     throw new HttpError(401, "Invalid refresh token.");
   }
 
@@ -167,9 +168,9 @@ const logout = async (payload) => {
   }
 
   const tokenId = decoded.tid;
-  const userId = Number(decoded.sub);
+  const userId = decoded.sub;
 
-  if (!tokenId || !Number.isInteger(userId)) {
+  if (!tokenId || !isUuid(userId)) {
     throw new HttpError(401, "Invalid refresh token.");
   }
 
@@ -184,7 +185,7 @@ const logout = async (payload) => {
 };
 
 const logoutAll = async (userId) => {
-  if (!Number.isInteger(userId)) {
+  if (!isUuid(userId)) {
     throw new HttpError(401, "Invalid user.");
   }
 

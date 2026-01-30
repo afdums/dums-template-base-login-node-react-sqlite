@@ -15,15 +15,17 @@ export class AdminService {
       .pipe(map((response) => response?.users ?? []));
   }
 
-  setUserActive(accessToken: string, userId: number, isActive: boolean) {
+  setUserActive(accessToken: string, userId: string, isActive: boolean) {
     const headers = this.buildHeaders(accessToken).set(
       "Content-Type",
       "application/json"
     );
     return this.http
-      .patch<{ user: User }>(`${API_URL}/admin/users/${userId}/active`, {
-        isActive,
-      }, { headers })
+      .patch<{ user: User }>(
+        `${API_URL}/admin/users/${userId}/active`,
+        { isActive },
+        { headers }
+      )
       .pipe(map((response) => response?.user));
   }
 

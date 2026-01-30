@@ -1,8 +1,8 @@
 -- CreateTable
 CREATE TABLE "RefreshToken" (
-    "id" SERIAL NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "tokenId" TEXT NOT NULL,
-    "userId" INTEGER NOT NULL,
+    "userId" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "expiresAt" TIMESTAMP(3) NOT NULL,
     "revokedAt" TIMESTAMP(3),

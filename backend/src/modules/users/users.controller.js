@@ -20,7 +20,7 @@ const listUsersController = async (req, res) => {
 
 const setUserActiveController = async (req, res) => {
   try {
-    const userId = Number(req.params.userId);
+    const userId = req.params.userId;
     const isActive = req.body?.isActive;
     const user = await setUserActive(userId, isActive);
     return res.json({ user });
