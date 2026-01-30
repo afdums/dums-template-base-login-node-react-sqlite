@@ -49,6 +49,16 @@ Legenda de prioridade: P1 = obrigatorio, P2 = recomendado, P3 = opcional.
 
 ### Template - Reuso e branding
 
-- [ ] (P1) Script de "renomear projeto" (nome/app title/package.json)
+- [x] (P1) Script de "renomear projeto" (nome/app title/package.json)
 - [ ] (P2) Variaveis de tema padronizadas (cores/tipografia)
 - [ ] (P3) i18n basico (pt/en)
+
+## Renomear projeto
+
+Execute o script abaixo a partir da raiz do repo:
+
+```powershell
+.\scripts\rename-project.ps1 -Name "meu-projeto" -Title "Meu Projeto"
+```
+
+Se nao informar `-Title`, o script gera um titulo a partir do `-Name`.
